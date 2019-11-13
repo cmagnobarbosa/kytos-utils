@@ -26,15 +26,23 @@ ETC_KYTOS = 'etc/kytos'
 KYTOS_SKEL_PATH = 'etc/kytos/skel'
 USERNAME_PATH = os.path.join(KYTOS_SKEL_PATH, 'napp-structure/username')
 NAPP_PATH = os.path.join(USERNAME_PATH, 'napp')
-ETC_FILES = [(os.path.join(BASE_ENV, USERNAME_PATH),
-              [os.path.join(USERNAME_PATH, '__init__.py')]),
-             (os.path.join(BASE_ENV, NAPP_PATH),
-              [os.path.join(NAPP_PATH, '__init__.py.template'),
-               os.path.join(NAPP_PATH, 'kytos.json.template'),
-               os.path.join(NAPP_PATH, 'openapi.yml.template'),
-               os.path.join(NAPP_PATH, 'main.py.template'),
-               os.path.join(NAPP_PATH, 'README.rst.template'),
-               os.path.join(NAPP_PATH, 'settings.py.template')])]
+ETC_FILES = [
+    (
+        os.path.join(BASE_ENV, USERNAME_PATH),
+        [os.path.join(USERNAME_PATH, '__init__.py')],
+    ),
+    (
+        os.path.join(BASE_ENV, NAPP_PATH),
+        [
+            os.path.join(NAPP_PATH, '__init__.py.template'),
+            os.path.join(NAPP_PATH, 'kytos.json.template'),
+            os.path.join(NAPP_PATH, 'openapi.yml.template'),
+            os.path.join(NAPP_PATH, 'main.py.template'),
+            os.path.join(NAPP_PATH, 'README.rst.template'),
+            os.path.join(NAPP_PATH, 'settings.py.template'),
+        ],
+    ),
+]
 
 
 class SimpleCommand(Command):
@@ -54,15 +62,12 @@ class SimpleCommand(Command):
 
         Use *call* instead of *check_call* to ignore failures.
         """
-        pass
 
     def initialize_options(self):
         """Set default values for options."""
-        pass
 
     def finalize_options(self):
         """Post-process options."""
-        pass
 
 
 class Cleaner(clean):
@@ -168,26 +173,30 @@ class DevelopMode(develop, CommonInstall):
         self._create_data_files_directory(True)
 
 
-setup(name='kytos-utils',
-      version=__version__,
-      description='Command line utilities to use with Kytos.',
-      url='http://github.com/kytos/kytos-utils',
-      author='Kytos Team',
-      author_email='devel@lists.kytos.io',
-      license='MIT',
-      test_suite='tests',
-      include_package_data=True,
-      scripts=['bin/kytos'],
-      install_requires=[line.strip()
-                        for line in open("requirements/run.txt").readlines()
-                        if not line.startswith('#')],
-      packages=find_packages(exclude=['tests']),
-      cmdclass={
-          'ci': CITest,
-          'clean': Cleaner,
-          'coverage': TestCoverage,
-          'develop': DevelopMode,
-          'install': InstallMode,
-          'lint': Linter
-      },
-      zip_safe=False)
+setup(
+    name='kytos-utils',
+    version=__version__,
+    description='Command line utilities to use with Kytos.',
+    url='http://github.com/kytos/kytos-utils',
+    author='Kytos Team',
+    author_email='devel@lists.kytos.io',
+    license='MIT',
+    test_suite='tests',
+    include_package_data=True,
+    scripts=['bin/kytos'],
+    install_requires=[
+        line.strip()
+        for line in open("requirements/run.txt").readlines()
+        if not line.startswith('#')
+    ],
+    packages=find_packages(exclude=['tests']),
+    cmdclass={
+        'ci': CITest,
+        'clean': Cleaner,
+        'coverage': TestCoverage,
+        'develop': DevelopMode,
+        'install': InstallMode,
+        'lint': Linter,
+    },
+    zip_safe=False,
+)
