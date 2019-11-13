@@ -173,30 +173,26 @@ class DevelopMode(develop, CommonInstall):
         self._create_data_files_directory(True)
 
 
-setup(
-    name='kytos-utils',
-    version=__version__,
-    description='Command line utilities to use with Kytos.',
-    url='http://github.com/kytos/kytos-utils',
-    author='Kytos Team',
-    author_email='devel@lists.kytos.io',
-    license='MIT',
-    test_suite='tests',
-    include_package_data=True,
-    scripts=['bin/kytos'],
-    install_requires=[
-        line.strip()
-        for line in open("requirements/run.txt").readlines()
-        if not line.startswith('#')
-    ],
-    packages=find_packages(exclude=['tests']),
-    cmdclass={
-        'ci': CITest,
-        'clean': Cleaner,
-        'coverage': TestCoverage,
-        'develop': DevelopMode,
-        'install': InstallMode,
-        'lint': Linter,
-    },
-    zip_safe=False,
-)
+setup(name='kytos-utils',
+      version=__version__,
+      description='Command line utilities to use with Kytos.',
+      url='http://github.com/kytos/kytos-utils',
+      author='Kytos Team',
+      author_email='devel@lists.kytos.io',
+      license='MIT',
+      test_suite='tests',
+      include_package_data=True,
+      scripts=['bin/kytos'],
+      install_requires=[line.strip()
+                        for line in open("requirements/run.txt").readlines()
+                        if not line.startswith('#')],
+      packages=find_packages(exclude=['tests']),
+      cmdclass={
+          'ci': CITest,
+          'clean': Cleaner,
+          'coverage': TestCoverage,
+          'develop': DevelopMode,
+          'install': InstallMode,
+          'lint': Linter
+      },
+      zip_safe=False)
