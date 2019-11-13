@@ -15,7 +15,7 @@ from setuptools import Command, find_packages, setup
 from setuptools.command.develop import develop
 from setuptools.command.install import install
 
-from kytos import __version__
+import kytos
 
 if 'VIRTUAL_ENV' in os.environ:
     BASE_ENV = os.environ['VIRTUAL_ENV']
@@ -26,23 +26,15 @@ ETC_KYTOS = 'etc/kytos'
 KYTOS_SKEL_PATH = 'etc/kytos/skel'
 USERNAME_PATH = os.path.join(KYTOS_SKEL_PATH, 'napp-structure/username')
 NAPP_PATH = os.path.join(USERNAME_PATH, 'napp')
-ETC_FILES = [
-    (
-        os.path.join(BASE_ENV, USERNAME_PATH),
-        [os.path.join(USERNAME_PATH, '__init__.py')],
-    ),
-    (
-        os.path.join(BASE_ENV, NAPP_PATH),
-        [
-            os.path.join(NAPP_PATH, '__init__.py.template'),
-            os.path.join(NAPP_PATH, 'kytos.json.template'),
-            os.path.join(NAPP_PATH, 'openapi.yml.template'),
-            os.path.join(NAPP_PATH, 'main.py.template'),
-            os.path.join(NAPP_PATH, 'README.rst.template'),
-            os.path.join(NAPP_PATH, 'settings.py.template'),
-        ],
-    ),
-]
+ETC_FILES = [(os.path.join(BASE_ENV, USERNAME_PATH),
+              [os.path.join(USERNAME_PATH, '__init__.py')]),
+             (os.path.join(BASE_ENV, NAPP_PATH),
+              [os.path.join(NAPP_PATH, '__init__.py.template'),
+               os.path.join(NAPP_PATH, 'kytos.json.template'),
+               os.path.join(NAPP_PATH, 'openapi.yml.template'),
+               os.path.join(NAPP_PATH, 'main.py.template'),
+               os.path.join(NAPP_PATH, 'README.rst.template'),
+               os.path.join(NAPP_PATH, 'settings.py.template')])]
 
 
 class SimpleCommand(Command):
@@ -174,7 +166,7 @@ class DevelopMode(develop, CommonInstall):
 
 
 setup(name='kytos-utils',
-      version=__version__,
+      version=kytos.__version__,
       description='Command line utilities to use with Kytos.',
       url='http://github.com/kytos/kytos-utils',
       author='Kytos Team',
